@@ -106,29 +106,35 @@ export function InfinitePortfolioGallery() {
       frame = 0;
     };
 
+    const inView = () => {
+      const rect = viewport.getBoundingClientRect();
+      return rect.bottom > 48 && rect.top < window.innerHeight - 24;
+    };
+    const sync = () => {
+      if (!document.hidden && inView()) start();
+      else stop();
+    };
+
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting && !document.hidden) start();
-        else stop();
+      () => {
+        sync();
       },
-      { threshold: 0.08 },
+      { threshold: 0.01, rootMargin: "80px 0px" },
     );
     io.observe(viewport);
+    sync();
 
-    const onVis = () => {
-      if (document.hidden) {
-        stop();
-        return;
-      }
-      const rect = viewport.getBoundingClientRect();
-      if (rect.bottom > 0 && rect.top < window.innerHeight) start();
-    };
+    const onVis = () => sync();
     document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
 
     return () => {
       stop();
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", sync);
     };
   }, [staticMode, style, items.length]);
 

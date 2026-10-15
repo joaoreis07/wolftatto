@@ -19,13 +19,13 @@ export const site = {
   awards: 70,
 } as const;
 
+const whatsappMessage =
+  "Olá, Wolff! Conheci seu trabalho pelo site e gostaria de conversar sobre uma tatuagem.";
+
 export const messages = {
-  quote:
-    "Olá, Junior! Conheci seu trabalho pelo site e gostaria de solicitar um orçamento para uma tatuagem.",
-  portfolio:
-    "Olá, Junior! Vi seus trabalhos no site e gostaria de conversar sobre um projeto de tatuagem.",
-  closing:
-    "Olá, Junior! Conheci seu trabalho pelo site e gostaria de conversar sobre uma tatuagem.",
+  quote: whatsappMessage,
+  portfolio: whatsappMessage,
+  closing: whatsappMessage,
 } as const;
 
 export const nav = [

@@ -28,13 +28,11 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: clip;
 }
 
 body {
   background: var(--ink);
   color: var(--ivory);
-  overflow-x: clip;
 }
 
 ::selection {
@@ -108,6 +106,12 @@ section[id] {
     border-color: #c5a36a;
     color: #e7c78b;
   }
+
+  .btn-compact {
+    min-height: 2.5rem;
+    padding: 0.4rem 0.9rem;
+    letter-spacing: 0.12em;
+  }
 }
 
 .gallery-fade {
@@ -116,6 +120,46 @@ section[id] {
 
 img {
   image-rendering: auto;
+}
+
+@keyframes hero-pan {
+  from {
+    object-position: 66% 16%;
+  }
+  to {
+    object-position: 78% 30%;
+  }
+}
+
+.hero-pan {
+  animation: hero-pan 18s ease-in-out infinite alternate;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-rise {
+  animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (min-width: 1024px) {
+  .hero-pan {
+    animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-bottom: calc(3.75rem + env(safe-area-inset-bottom));
+  }
 }
 
 @media (max-width: 1023px) {
@@ -131,5 +175,10 @@ img {
 
   .btn:hover {
     transform: none;
+  }
+
+  .hero-pan,
+  .hero-rise {
+    animation: none;
   }
 }

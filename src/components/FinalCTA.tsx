@@ -32,7 +32,7 @@ export function FinalCTA() {
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/35" />
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/40" />
 
-      <div className="relative z-10 mx-auto flex min-h-[88svh] max-w-[1440px] flex-col justify-end px-5 py-20 sm:px-8 lg:px-12 lg:py-24">
+      <div className="relative z-10 mx-auto flex min-h-[88svh] max-w-[1440px] flex-col justify-end px-5 pt-20 pb-[calc(6.5rem+env(safe-area-inset-bottom))] sm:px-8 md:py-20 lg:px-12 lg:py-24">
         <Reveal>
           <p className="text-[11px] tracking-[0.32em] text-gold uppercase">Vamos conversar?</p>
           <h2 className="font-display mt-4 max-w-[12ch] text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.88] font-black tracking-[-0.02em] text-ivory uppercase">

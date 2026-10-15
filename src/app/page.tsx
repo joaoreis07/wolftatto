@@ -17,7 +17,7 @@ export default function Page() {
         Ir para o conteúdo
       </a>
       <Header />
-      <main>
+      <main className="overflow-x-clip">
         <Hero />
         <InfinitePortfolioGallery />
         <ArtistSection />

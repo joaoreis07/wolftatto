@@ -1,11 +1,6 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 const highlights = [
   {
@@ -27,58 +22,45 @@ const highlights = [
 ];
 
 export function Hero() {
-  const reduce = useReducedMotion();
-
   return (
-    <section id="inicio" className="relative flex min-h-svh flex-col overflow-hidden">
-      <Image
-        src="/images/backgrounds/hero.png"
-        alt="Tatuagem realista de tigre e retrato no Wolff Tattoo Studio"
-        fill
-        priority
-        unoptimized
-        sizes="100vw"
-        className="object-cover object-[84%_30%] lg:object-contain lg:object-right"
-      />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(9,9,9,0.62)_0%,rgba(9,9,9,0.18)_32%,rgba(9,9,9,0.9)_70%,#090909_100%)] lg:bg-[linear-gradient(90deg,#090909_0%,rgba(9,9,9,0.9)_30%,rgba(9,9,9,0.22)_48%,transparent_64%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ink/80 to-transparent" />
+    <section id="inicio" className="relative flex flex-col overflow-hidden lg:min-h-svh">
+      <div className="relative h-[min(54svh,440px)] min-h-[230px] w-full lg:absolute lg:inset-0 lg:h-auto lg:min-h-0">
+        <Image
+          src="/images/backgrounds/hero.png"
+          alt="Tatuagem realista de tigre e retrato no Wolff Tattoo Studio"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="hero-pan object-cover object-[72%_22%] lg:object-contain lg:object-right"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/25 to-ink lg:hidden" />
+        <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,#090909_0%,rgba(9,9,9,0.9)_30%,rgba(9,9,9,0.22)_48%,transparent_64%)] lg:block" />
+      </div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-ink/80 to-transparent" />
 
-      <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pt-28 pb-8 sm:px-8 lg:max-w-[52%] lg:justify-center lg:px-14 lg:pt-32 lg:pb-12 xl:px-20">
-        <motion.p
-          className="text-[11px] tracking-[0.34em] text-gold uppercase"
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15, ease }}
-        >
+      <div className="relative z-10 -mt-16 flex flex-col justify-end bg-gradient-to-b from-transparent via-ink to-ink px-5 pt-4 pb-8 sm:px-8 lg:mt-0 lg:min-h-svh lg:max-w-[52%] lg:justify-center lg:bg-transparent lg:px-14 lg:pt-32 lg:pb-12 xl:px-20">
+        <p className="hero-rise text-[11px] tracking-[0.28em] text-gold uppercase sm:tracking-[0.34em]" style={{ animationDelay: "0.05s" }}>
           Realismo • Arte • Identidade
-        </motion.p>
+        </p>
 
-        <motion.h1
-          className="font-display mt-5 text-[clamp(1.9rem,2.85vw,3.35rem)] leading-[1.08] font-black tracking-[0.055em] text-ivory uppercase"
-          initial={reduce ? false : { opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.28, ease }}
+        <h1
+          className="hero-rise font-display mt-4 max-w-[12ch] text-[clamp(1.7rem,8vw,2.15rem)] leading-[0.98] font-black tracking-[0.02em] text-ivory uppercase min-[390px]:max-w-none min-[390px]:text-[2.05rem] lg:mt-5 lg:max-w-none lg:text-[clamp(1.9rem,2.85vw,3.35rem)] lg:leading-[1.08] lg:tracking-[0.055em]"
+          style={{ animationDelay: "0.12s" }}
         >
           <span className="block lg:whitespace-nowrap">Tattoos que</span>
-          <span className="mt-2 block text-gold lg:whitespace-nowrap">contam histórias</span>
-        </motion.h1>
+          <span className="mt-1.5 block text-gold lg:mt-2 lg:whitespace-nowrap">contam histórias</span>
+        </h1>
 
-        <motion.p
-          className="mt-6 max-w-md text-base leading-relaxed text-ivory/80 sm:text-[1.05rem]"
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.48, ease }}
+        <p
+          className="hero-rise mt-5 max-w-md text-[0.95rem] leading-relaxed text-ivory/85 sm:mt-6 sm:text-[1.05rem]"
+          style={{ animationDelay: "0.2s" }}
         >
           Mais que tatuagens, são marcas da sua história. Realismo, cor, fé e
           originalidade em cada detalhe. Aqui, sua ideia se transforma em arte.
-        </motion.p>
+        </p>
 
-        <motion.div
-          className="mt-8 flex flex-col gap-3 sm:flex-row"
-          initial={reduce ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.64, ease }}
-        >
+        <div className="hero-rise mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row" style={{ animationDelay: "0.28s" }}>
           <WhatsAppButton className="w-full sm:w-auto" message="quote">
             Agendar tattoo
           </WhatsAppButton>
@@ -86,7 +68,7 @@ export function Hero() {
             Ver trabalhos
             <span aria-hidden="true">→</span>
           </a>
-        </motion.div>
+        </div>
       </div>
 
       <div className="relative z-10 border-t border-white/10 bg-ink/35">
@@ -108,7 +90,7 @@ export function Hero() {
                 >
                   <path d={item.icon} strokeLinejoin="round" strokeLinecap="round" />
                 </svg>
-                <span className="text-[11px] tracking-[0.14em] text-ivory uppercase">
+                <span className="text-[10px] leading-snug tracking-[0.12em] text-ivory uppercase sm:text-[11px] sm:tracking-[0.14em]">
                   {item.title}
                 </span>
               </div>

@@ -5,7 +5,7 @@ export function Footer() {
   const whatsapp = whatsappHref(messages.quote);
 
   return (
-    <footer className="border-t border-white/10 bg-ink pb-28 md:pb-12">
+    <footer className="border-t border-white/10 bg-ink pb-[calc(4.25rem+env(safe-area-inset-bottom))] md:pb-12">
       <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-14 sm:px-8 md:grid-cols-3 lg:px-12">
         <div>
           <Logo />
