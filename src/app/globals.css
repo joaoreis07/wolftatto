@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #090909;
+  --graphite: #171717;
+  --ash: #242424;
+  --ivory: #e8e5e0;
+  --gold: #c5a36a;
+  --gold-light: #e7c78b;
+  --background: #090909;
+  --foreground: #e8e5e0;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-ash: var(--ash);
+  --color-ivory: var(--ivory);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-playfair);
+  --font-serif: var(--font-cormorant);
+  --font-script: var(--font-script);
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background: var(--ink);
+  color: var(--ivory);
+  overflow-x: clip;
+}
+
+::selection {
+  background: #c5a36a;
+  color: #090909;
+}
+
+:focus-visible {
+  outline: 2px solid #e7c78b;
+  outline-offset: 3px;
+}
+
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: 1rem;
+  z-index: 80;
+  background: #c5a36a;
+  color: #090909;
+  padding: 0.7rem 1rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 3rem;
+    padding: 0.85rem 1.35rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition:
+      background-color 0.35s ease,
+      color 0.35s ease,
+      border-color 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-gold {
+    background: #c5a36a;
+    color: #090909;
+  }
+
+  .btn-gold:hover {
+    background: #e7c78b;
+  }
+
+  .btn-ghost {
+    border: 1px solid rgba(232, 229, 224, 0.28);
+    color: #e8e5e0;
+    background: transparent;
+  }
+
+  .btn-ghost:hover {
+    border-color: #c5a36a;
+    color: #e7c78b;
+  }
+}
+
+.gallery-fade {
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+img {
+  image-rendering: auto;
+}
+
+@media (max-width: 1023px) {
+  .gallery-fade {
+    mask-image: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}
