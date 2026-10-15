@@ -32,10 +32,10 @@ export function Hero() {
           priority
           unoptimized
           sizes="100vw"
-          className="hero-pan object-cover object-[72%_22%] lg:object-contain lg:object-right"
+          className="hero-pan object-cover object-[72%_22%] lg:object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/25 to-ink lg:hidden" />
-        <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,#090909_0%,rgba(9,9,9,0.9)_30%,rgba(9,9,9,0.22)_48%,transparent_64%)] lg:block" />
+        <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,#090909_0%,rgba(9,9,9,0.9)_18%,rgba(9,9,9,0.45)_32%,transparent_46%)] lg:block" />
       </div>
       <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-ink/80 to-transparent" />
 

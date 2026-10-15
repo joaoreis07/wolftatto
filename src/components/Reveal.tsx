@@ -1,10 +1,7 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-
-const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 export function Reveal({
   children,
@@ -17,75 +14,64 @@ export function Reveal({
   delay?: number;
   y?: number;
 }) {
-  const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
-    if (!node || reduce) return;
+    if (!node) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let done = false;
     const show = () => {
       if (done) return;
       done = true;
       setShown(true);
-      node.animate(
-        [
-          { opacity: 0, transform: `translateY(${y}px)` },
-          { opacity: 1, transform: "translateY(0px)" },
-        ],
-        {
-          duration: 900,
-          delay: delay * 1000,
-          easing,
-          fill: "both",
-        },
-      );
     };
 
     const entered = () => {
       const rect = node.getBoundingClientRect();
-      const view = window.visualViewport?.height ?? window.innerHeight;
-      return rect.top < view * 0.82 && rect.bottom > 48;
+      const view = Math.max(window.innerHeight || 0, window.visualViewport?.height || 0);
+      return rect.top < view * 0.92 && rect.bottom > 0;
     };
 
-    if (entered()) show();
+    const onScroll = () => {
+      if (entered()) show();
+    };
+
+    if (entered()) requestAnimationFrame(show);
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) show();
       },
-      { threshold: [0.15, 0.35], rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0 },
     );
     observer.observe(node);
 
-    const onScroll = () => {
-      if (entered()) show();
-    };
+    const poll = window.setInterval(onScroll, 200);
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("scroll", onScroll, { capture: true, passive: true });
+    window.addEventListener("touchmove", onScroll, { passive: true });
     window.visualViewport?.addEventListener("scroll", onScroll, { passive: true });
+    window.visualViewport?.addEventListener("resize", onScroll, { passive: true });
 
     return () => {
       observer.disconnect();
+      window.clearInterval(poll);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("touchmove", onScroll);
       window.visualViewport?.removeEventListener("scroll", onScroll);
+      window.visualViewport?.removeEventListener("resize", onScroll);
     };
-  }, [delay, reduce, y]);
-
-  const visible = reduce || shown;
+  }, []);
 
   return (
     <div
       ref={ref}
-      className={cn(!reduce && shown && "reveal-in", !visible && "opacity-0", className)}
-      style={
-        visible
-          ? { animationDelay: `${delay}s` }
-          : { transform: `translateY(${y}px)` }
-      }
+      className={cn("reveal", shown && "is-in", className)}
+      style={{ transitionDelay: `${delay}s`, ["--reveal-y" as string]: `${y}px` }}
     >
       {children}
     </div>
