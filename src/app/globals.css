@@ -167,9 +167,6 @@ img {
 @media (min-width: 1024px) {
   .hero-pan {
     animation: none;
-    object-position: right center;
-    transform: scale(1.2);
-    transform-origin: right center;
   }
 }
 
