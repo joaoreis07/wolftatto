@@ -4,11 +4,13 @@ import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
+const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
+
 export function Reveal({
   children,
   className,
   delay = 0,
-  y = 28,
+  y = 42,
 }: {
   children: ReactNode;
   className?: string;
@@ -21,21 +23,31 @@ export function Reveal({
 
   useEffect(() => {
     const node = ref.current;
-    if (!node) return;
-    if (reduce) {
-      setShown(true);
-      return;
-    }
+    if (!node || reduce) return;
 
     let done = false;
     const show = () => {
       if (done) return;
       done = true;
       setShown(true);
+      node.animate(
+        [
+          { opacity: 0, transform: `translateY(${y}px)` },
+          { opacity: 1, transform: "translateY(0px)" },
+        ],
+        {
+          duration: 900,
+          delay: delay * 1000,
+          easing,
+          fill: "both",
+        },
+      );
     };
+
     const entered = () => {
       const rect = node.getBoundingClientRect();
-      return rect.top < window.innerHeight * 0.86 && rect.bottom > 32;
+      const view = window.visualViewport?.height ?? window.innerHeight;
+      return rect.top < view * 0.82 && rect.bottom > 48;
     };
 
     if (entered()) show();
@@ -44,7 +56,7 @@ export function Reveal({
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) show();
       },
-      { root: null, threshold: 0.22, rootMargin: "0px 0px -12% 0px" },
+      { threshold: [0.15, 0.35], rootMargin: "0px 0px -8% 0px" },
     );
     observer.observe(node);
 
@@ -52,29 +64,28 @@ export function Reveal({
       if (entered()) show();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    document.addEventListener("scroll", onScroll, { capture: true, passive: true });
+    window.visualViewport?.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("scroll", onScroll, true);
+      window.visualViewport?.removeEventListener("scroll", onScroll);
     };
-  }, [reduce]);
+  }, [delay, reduce, y]);
+
+  const visible = reduce || shown;
 
   return (
     <div
       ref={ref}
-      className={cn(
-        "motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none",
-        shown
-          ? "translate-y-0 opacity-100 transition-[opacity,transform] duration-700 ease-out"
-          : "opacity-0",
-        className,
-      )}
-      style={{
-        transform: shown ? undefined : `translateY(${y}px)`,
-        transitionDelay: shown ? `${delay}s` : "0s",
-      }}
+      className={cn(!reduce && shown && "reveal-in", !visible && "opacity-0", className)}
+      style={
+        visible
+          ? { animationDelay: `${delay}s` }
+          : { transform: `translateY(${y}px)` }
+      }
     >
       {children}
     </div>
