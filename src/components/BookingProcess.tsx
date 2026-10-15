@@ -64,7 +64,7 @@ export function BookingProcess() {
           <ol className="grid gap-10 md:grid-cols-4 md:gap-6">
             {steps.map((step, index) => (
               <li key={step.title}>
-                <Reveal delay={0.08 * index} y={24}>
+                <Reveal delay={0.16 * index} y={32}>
                   <div className="flex items-start gap-4 md:flex-col md:gap-5">
                     <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold/70 bg-ink text-xs tracking-[0.14em] text-gold">
                       0{index + 1}

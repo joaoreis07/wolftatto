@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
+import { Reveal } from "@/components/Reveal";
 import { useSite } from "@/components/SiteProvider";
 import { styleGroups, works, type Work } from "@/lib/gallery";
 import { cn } from "@/lib/cn";
@@ -198,15 +199,19 @@ export function InfinitePortfolioGallery() {
   return (
     <section id="trabalhos" className="overflow-hidden py-20 sm:py-28">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-12">
-        <div>
-          <p className="text-[11px] tracking-[0.32em] text-gold uppercase">Portfólio</p>
-          <h2 className="font-display mt-3 text-[clamp(2.6rem,5vw,4.8rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-ivory uppercase">
-            Trabalhos <span className="text-gold">recentes</span>
-          </h2>
-        </div>
-        <p className="max-w-sm text-sm leading-relaxed text-ivory/70 lg:text-right">
-          Cada tatuagem é única, feita com propósito, técnica e atenção aos detalhes.
-        </p>
+        <Reveal>
+          <div>
+            <p className="text-[11px] tracking-[0.32em] text-gold uppercase">Portfólio</p>
+            <h2 className="font-display mt-3 text-[clamp(2.6rem,5vw,4.8rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-ivory uppercase">
+              Trabalhos <span className="text-gold">recentes</span>
+            </h2>
+          </div>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <p className="max-w-sm text-sm leading-relaxed text-ivory/70 lg:text-right">
+            Cada tatuagem é única, feita com propósito, técnica e atenção aos detalhes.
+          </p>
+        </Reveal>
       </div>
 
       {styleName ? (
